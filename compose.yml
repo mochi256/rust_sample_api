@@ -1,0 +1,21 @@
+version: "3"
+services:
+  db:
+    build:
+      context: .
+      dockerfile: db/Dockerfile
+    platform: linux/amd64
+    container_name: db
+    env_file:
+      - .env
+    volumes:
+      - db-vol:/var/lib/mysql/
+      - ./logs/mysql/:/var/log/mysql
+      - ./db/my.cnf:/etc/mysql/conf.d/my.cnf
+    networks:
+      - dev-nw
+volumes:
+  db-vol:
+networks:
+  dev-nw:
+    driver: bridge
